@@ -37,4 +37,23 @@ public class TextUtils {
         return symbolsRepeating;
     }
 
+    public static Optional<Character> getFirstNonRepeatSymbol(String text)
+            throws TextUtilsOperationException {
+        checkTextIsEmpty(text);
+        List<Character> nonRepeatSymbols = new ArrayList<>();
+        List<Character> repeatedSymbols = new ArrayList<>();
+
+        for (char symbol : text.toCharArray()) {
+            if (!repeatedSymbols.contains(symbol)) {
+                if (nonRepeatSymbols.contains(symbol)) {
+                    nonRepeatSymbols.remove(Character.valueOf(symbol));
+                    repeatedSymbols.add(symbol);
+                } else nonRepeatSymbols.add(symbol);
+            }
+        }
+
+        if (nonRepeatSymbols.isEmpty()) return Optional.empty();
+        return Optional.of(nonRepeatSymbols.get(0));
+    }
+
 }
